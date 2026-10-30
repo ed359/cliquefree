@@ -1,0 +1,60 @@
+name: Comparator
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - sani
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: comparator-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Check existence theorem statements
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Free runner disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo docker image prune --all --force
+          df -h /
+
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Lean
+        uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9 # v1.5.0
+        with:
+          lake-package-directory: lean
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-github-cache: false
+          use-mathlib-cache: false
+
+      - name: Build pinned bubblewrap
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install --yes --no-install-recommends meson ninja-build libcap-dev pkg-config
+          curl --fail --location --silent --show-error --proto '=https' --tlsv1.2 \
+            https://raw.githubusercontent.com/PalomarRegistry/PalomarSubmission/14aa8d6b3c2f14a8540605e37144560b9a00e7e7/scripts/install_bwrap.sh \
+            --output "$RUNNER_TEMP/install-bwrap.sh"
+          echo "COMPARATOR_BWRAP=$(bash "$RUNNER_TEMP/install-bwrap.sh" "$RUNNER_TEMP/bwrap-bin")" >> "$GITHUB_ENV"
+
+      - name: Run sandboxed Comparator check
+        run: ./scripts/verify-comparator.sh

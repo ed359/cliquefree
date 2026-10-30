@@ -1,0 +1,123 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: v0.4
+
+project:
+  name: Weighted independent sets in clique-free graphs
+  description: >-
+    A Lean formalization of a weighted independent-set existence bound for
+    finite clique-free graphs. For every integer r at least four, positive
+    real degree weights s, and nonnegative real objective weights a, a
+    K_r-free graph has an independent set whose a-weight is at least c_r
+    times the sum of a_v f(s(N(v))/s_v), where f is Shearer's function.
+    The coefficient is the explicit positive rational
+    c_r = 1/(1 + 1152 B_0 r), with a fixed absolute constant B_0, and has
+    proved upper and lower bounds of order 1/r. The proof combines scalar
+    potentials, a weighted triangle dichotomy, sparse neighborhood restriction,
+    deletion identities, and compactness induction.
+  authors:
+    - Ewan Davies
+  responsible_maintainers:
+    - Ewan Davies
+  license: Apache-2.0
+
+classification:
+  arxiv: [math.CO]
+  msc2020: [05C69, 05C35]
+
+sources:
+  - title: Random independent sets and local sparsity
+    authors: [Ewan Davies]
+    id: https://arxiv.org/abs/2609.04654v1
+    type: paper
+    location: Section 1.1, weighted degrees and the local-demand formulation
+    relationship: adapts
+    note: >-
+      Supplies the weighted-degree formulation and Shearer-function benchmark.
+  - title: A Logarithmic Independence Bound for Clique-Free Graphs
+    authors: [OpenAI]
+    id: https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-Logarithmic-Independence-Bound-for-Clique-Free-Graphs-September-25-2026
+    type: paper
+    location: Sections 3–5, cross-mass to triangle-mass argument
+    relationship: adapts
+    note: >-
+      The formalization adapts the weighted triangle argument to vertex-dependent
+      scales and states a real-weight dichotomy.
+  - title: Ode to the Ajtai–Erdős–Komlós–Szemerédi conjecture
+    authors: [Ross J. Kang]
+    id: https://doi.org/10.5281/zenodo.23351325
+    type: paper
+    location: Proof of Lemma 3.1, step ⟨1⟩1, page 9
+    relationship: adapts
+    note: >-
+      The neighborhood restriction argument is used to obtain the scale 24r.
+  - title: A note on the independence number of triangle-free graphs
+    authors: [James B. Shearer]
+    id: https://doi.org/10.1016/0012-365X(83)90273-X
+    type: paper
+    relationship: background
+    note: >-
+      Background for Shearer's function and degree-based independence bounds.
+
+status:
+  scope: >-
+    Both declarations selected by lean/comparator.json concern existence of
+    independent sets in finite simple K_r-free graphs for r at least four,
+    arbitrary positive real degree weights, and nonnegative real objective
+    weights. The two compared variants give an inverse-linear rational
+    coefficient family and its explicit coefficient. Empty graphs, zero
+    objective weights, and isolated vertices are included. The counts below cover
+    the proved declarations in Cliquefree and Solution. Challenge contains two
+    admitted statements for comparison with Solution.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: [propext, Quot.sound, Classical.choice]
+  main_results:
+    - declaration: CliquefreeResults.weighted_existence
+      file: lean/Solution.lean
+      sorry_count: 0
+      axioms: [propext, Quot.sound, Classical.choice]
+      comparator_config: lean/comparator.json
+      literature_dependencies: []
+    - declaration: CliquefreeResults.weighted_existence_explicit
+      file: lean/Solution.lean
+      sorry_count: 0
+      axioms: [propext, Quot.sound, Classical.choice]
+      comparator_config: lean/comparator.json
+      literature_dependencies: []
+  known_gaps: >-
+    No proof gaps are known in the selected declarations.
+
+automation:
+  methods:
+    - method: agent
+      models: [GPT-6 Astra]
+      framework: Codex
+      tool_setup: >-
+        AI agents with repository access, Lean/Lake, source inspection, and
+        build feedback.
+
+fidelity:
+  divergences: >-
+    The Comparator statements require r at least four; supporting existence bounds in Lean hold for
+    r at least two.
+
+review:
+  status: self-assessed
+  scope: Top-level Comparator statements only
+
+alignment:
+  namespace: CliquefreeResults
+  statements:
+    - source: Weighted existence bound with an inverse-linear rational coefficient family
+      lean: CliquefreeResults.weighted_existence
+      module: Solution
+      status: proved
+      note: Independently stated in Challenge and selected by lean/comparator.json.
+    - source: The same bound with c_r = 1/(1 + 1152 B_0 r)
+      lean: CliquefreeResults.weighted_existence_explicit
+      module: Solution
+      status: proved
+      note: Independently stated in Challenge and selected by lean/comparator.json.
+
+acknowledgements: >-
+  Built on Lean, Mathlib, and LeanArchitect.

@@ -1,0 +1,37 @@
+name = "docbuild"
+reservoir = false
+version = "0.1.0"
+packagesDir = "../lean/.lake/packages"
+
+[[require]]
+name = "cliquefree"
+path = "../lean"
+
+[[require]]
+scope = "leanprover"
+name = "doc-gen4"
+# Interproject linking: https://github.com/leanprover/doc-gen4/pull/396 (unmerged).
+# Pin its implementation; the root project remains on Lean 4.35.0.
+rev = "9a591946b68fbb4cec5355d0c7a8187a0984c6ba"
+
+# Retain the generator dependencies used by doc-gen4 v4.35.0. The feature branch
+# predates that release's dependency bumps. Cli also belongs to the proof project.
+[[require]]
+name = "Cli"
+git = "https://github.com/leanprover/lean4-cli"
+rev = "c24fe6078c630e89b489bffe59b3e20ac30d12c8"
+
+[[require]]
+name = "leansqlite"
+git = "https://github.com/leanprover/leansqlite"
+rev = "4ed2f27ecf81792abc8ff848670ac4356d0c4794"
+
+[[require]]
+name = "UnicodeBasic"
+git = "https://github.com/fgdorais/lean4-unicode-basic"
+rev = "6e48acac3a91665fcdc4a20d50b7ce6b7b41711f"
+
+[[require]]
+name = "BibtexQuery"
+git = "https://github.com/dupuisf/BibtexQuery"
+rev = "876b844aa52183cbcc0d82fdd4d1fc349f0dac34"

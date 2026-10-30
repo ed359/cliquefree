@@ -1,0 +1,93 @@
+\input{../../lean/.lake/build/blueprint/module/Cliquefree/Blueprint}
+
+\tableofcontents
+
+\chapter{Conventions}
+
+This blueprint presents the weighted independent-set bound in
+Theorem~\ref{thm:existence} and the main steps of its checked Lean proof.
+Its coefficient is
+$c_r=(1+1152B_0r)^{-1}=\Theta(r^{-1})$.
+
+Scalar analysis supplies a potential and its tangent-loss bound. A triangle
+dichotomy and sparse neighborhood restriction rule out triangle witnesses at
+a positive maximizer. The resulting triangle bound makes a deletion reward
+nonnegative. Compactness and induction then establish the weighted bound.
+
+Graphs are finite and simple, with vertex set $V$. A graph is $K_r$-free if
+it has no set of $r$ pairwise adjacent vertices; a set is independent if
+no two of its vertices are adjacent. The weights $s>0$ prescribe degrees,
+$u\ge0$ is the objective, and $w$ denotes auxiliary weights. For any weight
+vector $h$ and vertex set $A$, write $h(A)=\sum_{v\in A}h_v$. Thus
+$\alpha_u(G)=\max\{u(I):I\text{ independent}\}$.
+All vector inequalities are coordinatewise. The symbols $N(v)$ and
+$N[v]=N(v)\cup\{v\}$ denote open and closed neighborhoods, and
+$N[A]=\bigcup_{v\in A}N[v]$. Write $G[A]$ for the subgraph induced by $A$,
+and $G-A=G[V\setminus A]$; weights on these subgraphs are restricted to
+their vertex sets. The cross mass
+$\Xi_w(A,B)=\sum_{x\in A}\sum_{y\in B\cap N(x)}w_xw_y$ counts directed
+incidences; edge and triangle masses count each unordered edge or triangle once.
+All logarithms are natural unless a base is shown. The absolute constant
+$B_0=2^X$ is kept symbolic.
+
+\chapter{The existence theorem}
+
+\inputleannode{thm:existence}
+\inputleannode{bp:triangle-constants}
+\inputleannode{bp:constants}
+\inputleannode{bp:constant-bounds}
+
+\chapter{Weighted graphs and potentials}
+
+\inputleannode{lean:shearer-f}
+\inputleannode{bp:weighted-degree}
+\inputleannode{bp:objective}
+\inputleannode{lean:independence-attained}
+\inputleannode{bp:extremal-benchmark}
+\inputleannode{bp:graph-masses}
+\inputleannode{bp:scalar-potential}
+\inputleannode{bp:graph-potential}
+\inputleannode{bp:residual-reward}
+\inputleannode{bp:triangle-scales}
+\inputleannode{bp:witness}
+
+\chapter{Scalar analysis and lifting}
+
+\inputleannode{lean:f-continuous}
+\inputleannode{lean:f-limit}
+\inputleannode{lean:f-integral}
+\inputleannode{lean:optimizer-equation}
+\inputleannode{lean:envelope-derivative}
+\inputleannode{lean:potential-continuous}
+\inputleannode{lean:xi-positive}
+\inputleannode{bp:scalar-ode}
+\inputleannode{bp:scalar-loss}
+\inputleannode{bp:potential-comparison}
+\inputleannode{lem:lift}
+\inputleannode{cor:transfer}
+\inputleannode{lean:maximizer-stationary}
+
+\chapter{The triangle dichotomy}
+
+\inputleannode{lean:pruning}
+\inputleannode{lean:grand-coupling}
+\inputleannode{bp:triangle-reduction}
+\inputleannode{lem:triangle-test}
+
+\chapter{Sparse restriction and stationarity}
+
+\inputleannode{bp:disjointification}
+\inputleannode{lem:sparse-restriction}
+\inputleannode{lem:improvement}
+\inputleannode{lean:stationary-budget}
+\inputleannode{cor:stationary}
+
+\chapter{Deletion and compactness induction}
+
+\inputleannode{lem:deletion}
+\inputleannode{lean:deletion-slack}
+\inputleannode{lean:deletion-pivot}
+\inputleannode{bp:maximizing-sequence}
+\inputleannode{bp:boundary-decomposition}
+\inputleannode{lean:compactness-reduction}
+\inputleannode{lean:weighted-bound}

@@ -1,0 +1,36 @@
+name = "cliquefree"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["Cliquefree", "Challenge", "Solution"]
+lintDriver = "batteries/runLinter"
+lintDriverArgs = ["Cliquefree", "Cliquefree.Blueprint", "Solution"]
+
+[leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+# The root LICENSE applies; per-file mathlib-style headers are not required.
+weak.linter.style.header = false
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "LeanArchitect"
+git = "https://github.com/hanwenzhu/LeanArchitect"
+rev = "v4.35.0"
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0"
+
+[[lean_lib]]
+name = "Cliquefree"
+roots = ["Cliquefree", "Cliquefree.Blueprint"]
+
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]
