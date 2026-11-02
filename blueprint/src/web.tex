@@ -1,0 +1,25 @@
+% Web entry point, rendered by plasTeX with the leanblueprint plugin.
+\documentclass[a4paper]{report}
+
+\usepackage{amssymb,amsthm,amsmath}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\usepackage[showmore,dep_graph]{blueprint}
+
+\input{macros/common}
+\input{macros/web}
+
+% Relative links target the staged Pages homepage and API documentation.
+% CI adds the actual repository URL.
+\home{../}
+\dochome{../docs}
+\IfFileExists{site-links.tex}{\input{site-links}}{}
+
+\title{Weighted independent sets in clique-free graphs:\\
+  Existence theorem\\Formalization blueprint}
+\author{Ewan Davies}
+
+\begin{document}
+\maketitle
+\input{content}
+\end{document}

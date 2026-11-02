@@ -1,0 +1,75 @@
+name: Palomar preflight
+run-name: Palomar preflight ${{ inputs.commit }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: Full 40-character lowercase SHA of the public commit to verify
+        required: true
+        type: string
+      authorization_relationship:
+        description: Select the truthful relationship of the person requesting this check
+        required: true
+        type: choice
+        default: Select a relationship
+        options:
+          - Select a relationship
+          - I am a responsible author or maintainer
+          - I have approval from a responsible author or maintainer
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate preflight inputs
+    runs-on: ubuntu-24.04
+    outputs:
+      options: ${{ steps.inputs.outputs.options }}
+    steps:
+      - name: Check public source and explicit authorization
+        id: inputs
+        env:
+          PALOMAR_SOURCE_COMMIT: ${{ inputs.commit }}
+          PALOMAR_AUTHORIZATION: ${{ inputs.authorization_relationship }}
+          PALOMAR_REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+
+          if os.environ["PALOMAR_REPOSITORY_PRIVATE"] != "false":
+              raise SystemExit("Palomar requires public source.")
+          if not re.fullmatch(r"[0-9a-f]{40}", os.environ["PALOMAR_SOURCE_COMMIT"]):
+              raise SystemExit("commit must be a full 40-character lowercase SHA")
+          relationship = os.environ["PALOMAR_AUTHORIZATION"]
+          if relationship not in {
+              "I am a responsible author or maintainer",
+              "I have approval from a responsible author or maintainer",
+          }:
+              raise SystemExit("Select your truthful authorization relationship")
+          options = {
+              "project_path": "lean",
+              "formalization_metadata_path": "lean/formalization.yaml",
+              "comparator_config_path": "lean/comparator.json",
+              "authorization_relationship": relationship,
+          }
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write("options=" + json.dumps(options) + "\n")
+          PY
+
+  verify:
+    name: Complete Palomar mechanical preflight
+    needs: validate
+    uses: PalomarRegistry/PalomarSubmission/.github/workflows/submission.yml@14aa8d6b3c2f14a8540605e37144560b9a00e7e7
+    with:
+      repository: ${{ github.repository }}
+      commit: ${{ inputs.commit }}
+      pipeline_commit: 14aa8d6b3c2f14a8540605e37144560b9a00e7e7
+      request_id: preflight001
+      mode: full
+      execution_profile: palomar-standard-v1
+      options: ${{ needs.validate.outputs.options }}
+

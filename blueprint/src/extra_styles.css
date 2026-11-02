@@ -1,0 +1,9 @@
+/* Project-specific additions to the leanblueprint HTML theme. */
+.lean_decl {
+  overflow-wrap: anywhere;
+}
+
+.MathJax_Display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}

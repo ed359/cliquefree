@@ -1,0 +1,21 @@
+% Printable entry point, compiled by latexmk using XeLaTeX.
+\documentclass[a4paper]{report}
+
+\usepackage{geometry}
+\usepackage{expl3}
+\usepackage{amssymb,amsthm,mathtools}
+\usepackage[unicode,colorlinks=true,linkcolor=blue,urlcolor=magenta,citecolor=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\usepackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+
+\input{macros/common}
+\input{macros/print}
+
+\title{Weighted independent sets in clique-free graphs:\\
+  Existence theorem\\[1em]Formalization blueprint}
+\author{Ewan Davies}
+
+\begin{document}
+\maketitle
+\input{content}
+\end{document}
