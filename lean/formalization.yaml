@@ -101,13 +101,18 @@ automation:
         blueprint, a matching Lean formalization, and Palomar submission
         preparation.
   notes: >-
-    The maintainer reports that AI tools used for this work include GPT-6 Astra.
-    The agent was prompted to produce the formalization from an informal proof
-    developed by a team of human coauthors, with input from agents and curated
-    literature as sources. Humans have reviewed the entire informal proof.
+    AI tools used for this work include GPT-6 Astra. The agents' contributions are substantive.
+    Ewan Davies, the human maintainer, directed the scope and supplied
+    an informal proof developed by a human team with agent input and curated
+    literature. AI agents produced the blueprint and entire Lean formalization, including
+    the supporting definitions, lemmas, and proof code, using source inspection
+    and Lean/Lake build feedback. Agents also assisted with submission preparation.
+    The human coauthor team reviewed the entire informal proof prior to autoformalization.
     Human review of the Lean formalization is limited to the top-level Comparator
-    statements; the implementation has not undergone human review. Costs,
-    timings, and prompt logs were not calculated or retained.
+    statements; the implementation has not undergone human review. Verification
+    of the implementation relies on Lean, the axiom audit, and Comparator's
+    statement comparison and independent NanoDa replay. Costs, timings, and
+    prompt logs were not calculated or retained.
 
 fidelity:
   divergences: >-

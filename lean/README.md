@@ -125,13 +125,19 @@ are `propext`, `Quot.sound`, and `Classical.choice`. The local axiom audit check
 the proof declarations for any other axiom, including `sorryAx`; Comparator and
 its independent NanoDa replay provide the separate statement-and-proof check.
 
-Structured authorship, source relationships, automation, review status, scope,
-and licensing are recorded in [formalization.yaml](formalization.yaml).
-The maintainer reports that AI tools used for this work include GPT-6 Astra.
-Human review of the formalization is limited to the top-level Comparator statements;
-the implementation has not undergone human review. Costs, timings,
-and prompt logs were not calculated or retained.
-The agent was prompted to produce the formalization given an informal proof 
-developed by a team of human coauthors wiht input from agents. The informal proof 
-was developed by the human team with input from the agent and with curated literature 
-as sources. Humans have reviewed the entire informal proof.
+Ewan Davies, the human maintainer, directed the scope and supplied an
+informal proof developed by a human team with agent input and curated literature.
+AI agents produced the blueprint and Lean formalization, including the supporting
+definitions, lemmas, and proof code, using source inspection and Lean/Lake build
+feedback. Agents also assisted with submission preparation.
+
+The human coauthor team reviewed the entire informal proof prior to autoformalization.
+Human review of the Lean formalization
+is limited to the top-level Comparator statements; the implementation has not
+undergone human review. Verification of the implementation relies on the automated
+checks described above.
+
+Structured authorship, source relationships, review status, scope, and licensing
+are recorded in [formalization.yaml](formalization.yaml), with AI tools and their
+contributions credited under `automation`. Costs, timings, and prompt logs were
+not calculated or retained.
